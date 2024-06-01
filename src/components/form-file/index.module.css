@@ -1,0 +1,19 @@
+.fields {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.file {
+    display: inline-block;
+    border-radius: .5rem;
+    border: 1px solid #ddd;
+    padding: .5rem 1rem;
+    margin-right: .75rem;
+    background-color: transparent;
+    width: 100%;
+}
+
+audio {
+    width: 100%;
+    margin-bottom: 1rem;
+}

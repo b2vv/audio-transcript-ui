@@ -1,0 +1,33 @@
+.alert-danger {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 300px;
+    background-color: #363636;
+    border-radius: .5rem;
+    border: 1px solid #ddd;
+    overflow: hidden;
+
+    max-height: 10rem;
+}
+
+.alert-danger header {
+    height: 2rem;
+    font-weight: bold;
+    background-color: #f00;
+    opacity: .75;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    padding: .25rem .75rem;
+}
+
+.alert-danger section {
+    height: 2rem;
+    padding: .25rem .75rem;
+    font-weight: bold;
+    background-color: #363636;
+}
