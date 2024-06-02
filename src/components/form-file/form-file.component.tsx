@@ -16,6 +16,8 @@ interface IFileState {
 export const FormFileComponent: React.FC<IFormFileProps> = React.memo((props) => {
     const {submitHandler: submit, isLoading} = props;
     const reader = React.useMemo(() => new FileReader(), []);
+    const [fileLink, setFileLink] = React.useState<string>();
+    const fileRef = React.useRef<HTMLInputElement>(null);
     const [file, setFile] = React.useState<IFileState>({
         name: '',
         path: ''
@@ -27,15 +29,19 @@ export const FormFileComponent: React.FC<IFormFileProps> = React.memo((props) =>
         }
     }, []);
 
+
+
     const submitHandler = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         submit(new FormData(e.target as HTMLFormElement))
     }, [submit]);
 
     const fileHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        // const fileURL = URL.createObjectURL(e.target?.files?.[0] as Blob);
+        // setFileLink(fileURL)
         reader.readAsDataURL(e.target?.files?.[0] as Blob);
         setFile({
-            name:e.target?.files?.[0].name,
+            name: e.target?.files?.[0].name,
             path: e.target.value
         });
     }, [reader]);
@@ -48,12 +54,11 @@ export const FormFileComponent: React.FC<IFormFileProps> = React.memo((props) =>
         reader.onloadend = loadHandler;
     }, [reader, loadHandler])
 
-    const [fileLink, setFileLink] = React.useState<string>();
-    const fileRef = React.useRef<HTMLInputElement>(null);
+
     return (
         <>
             <div>
-                <audio controls={true}>
+                <audio key={fileLink} controls={true}>
                     {fileLink && (
                         <source src={fileLink} type="audio/mp4"/>
                     )}
@@ -61,7 +66,11 @@ export const FormFileComponent: React.FC<IFormFileProps> = React.memo((props) =>
             </div>
             <form onSubmit={submitHandler}>
                 <fieldset disabled={isLoading} className={styles.fields}>
-                    <input name="audio" ref={fileRef} value={file?.path} type="file" accept="audio/*"
+                    <input name="audio"
+                           ref={fileRef}
+                           value={file?.path}
+                           type="file"
+                           accept="audio/*"
                            onChange={fileHandler}/>
                     <input
                         value={file?.name}
