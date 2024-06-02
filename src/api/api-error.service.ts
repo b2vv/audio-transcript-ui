@@ -17,12 +17,16 @@ export class ApiErrorService {
         } else if (response.status === 500) {
             return 'The server returned Internal error';
         } else if (response.status !== 200) {
-            return `The server request failed with the status: ${response.status} ${response.statusText}`;
+            if (response.status) {
+                return `The server request failed with the status: ${response.status} ${response.statusText}`;
+            } else {
+                return 'The server is not connected';
+            }
         }
     }
 
     public getError(state: IErrorState, field?: string) {
-        if (!state || !state.errors || !state.errors.length) {
+        if (!state?.errors?.length) {
             return null;
         } else if (!field) {
             return state.errors[0];

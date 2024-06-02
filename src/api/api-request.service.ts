@@ -4,10 +4,9 @@ const options: RequestInit = {
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-        // 'Content-Type': 'application/json'
-        'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    // headers: {
+    //     'Content-Type': 'application/json'
+    // },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 };
@@ -18,7 +17,7 @@ export class ApiRequestService {
     private extractBody(response: Response) {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.indexOf('application/json') !== -1) {
-            return response.json();
+            return response?.json();
         } else {
             return response.text();
         }
@@ -29,7 +28,9 @@ export class ApiRequestService {
             .then(this.handleErrors)
             .then(
                 (response) => (
-                    this.extractBody(response).then((data) => ({data: data.data, response}))
+                    this.extractBody(response).then((data) => {
+                        return ({data, response});
+                    })
                 )
             );
     }
