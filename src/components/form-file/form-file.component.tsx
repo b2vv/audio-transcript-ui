@@ -70,7 +70,7 @@ export const FormFileComponent: React.FC<IFormFileProps> = React.memo((props) =>
                         onClick={fileNameHandler}
                         className={styles.file}
                     />
-                    <button type="submit" className="btn">
+                    <button type="submit" className="btn" disabled={!file?.path}>
                         Send {PaperPlane}
                     </button>
                 </fieldset>

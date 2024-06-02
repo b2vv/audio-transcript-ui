@@ -17,10 +17,10 @@ export class ApiErrorService {
         } else if (response.status === 500) {
             return 'The server returned Internal error';
         } else if (response.status !== 200) {
-            if (response.status) {
+            if (response.headers) {
                 return `The server request failed with the status: ${response.status} ${response.statusText}`;
             } else {
-                return 'The server is not connected';
+                return 'The server request failed';
             }
         }
     }
