@@ -1,0 +1,36 @@
+.transcriptions {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.list {
+    flex: 1;
+    min-height: 10rem;
+    border-radius: .5rem;
+    border: 1px solid #bbb;
+    margin-bottom: 1rem;
+    padding: .5rem 1rem;
+    overflow-y: auto;
+}
+
+.list-wrap {
+    display: flex;
+    white-space: nowrap;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-start;
+    min-height: 100%;
+}
+
+.text {
+    display: inline-block;
+    flex: 0 0 auto;
+    border-radius: .5rem;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    padding: .5rem 1rem;
+    background-color: #363636;
+    white-space: break-spaces;
+    line-height: 1.5rem;
+}

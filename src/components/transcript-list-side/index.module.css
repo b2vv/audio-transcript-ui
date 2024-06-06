@@ -1,0 +1,60 @@
+.file-info {
+    border-radius: .5rem;
+    border: 1px solid #bbb;
+    margin-bottom: 1rem;
+    padding: .5rem 1rem;
+    line-height: 1.5rem;
+}
+
+.title {
+    font-weight: bolder;
+}
+
+.date {
+    opacity: .5;
+}
+
+.text {
+    white-space: break-spaces;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 4rem);
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 1rem;
+    flex: none;
+}
+
+.list {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%;
+}
+
+.action {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.action > * {
+    margin-right: 0.25rem;
+}
+
+.action > *:last-child {
+    margin-right: 0;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

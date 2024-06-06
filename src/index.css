@@ -73,3 +73,16 @@ svg {
   max-height: 1rem;
   vert-align: middle;
 }
+
+#root {
+  max-width: 1280px;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+input[type=file] {
+  display: none;
+}

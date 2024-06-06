@@ -11,6 +11,8 @@ const options: RequestInit = {
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 };
 
+type RequestObject = any; // eslint-disable-line  @typescript-eslint/no-explicit-any
+
 export class ApiRequestService {
     public static API_PREFIX = HOST;
 
@@ -64,6 +66,41 @@ export class ApiRequestService {
             message: respErr.message,
             success: respErr.success
         };
+    }
+
+    private generateUrl(url: string, queryParams?: RequestObject | null) {
+        if (!queryParams || !Object.keys(queryParams).length) {
+            return url;
+        }
+
+        return `${url}?${this.serialiseObject(queryParams)}`;
+    }
+
+    private serialiseObject(obj: RequestObject): string {
+        const pairs = [];
+        for (const prop in obj) {
+            if (!obj?.[prop]) {
+                continue;
+            }
+
+            if (Array.isArray(obj[prop])) {
+                pairs.push((obj[prop] as []).map((item) => `${prop}[]=${encodeURIComponent(item)}`).join('&'));
+            } else if (typeof obj[prop] === 'object') {
+                pairs.push(this.serialiseObject(obj[prop] as RequestObject));
+            } else {
+                pairs.push(prop + '=' + encodeURIComponent(obj[prop] as string | number | boolean));
+            }
+        }
+        return pairs.join('&');
+    }
+
+    public get<T>(url: string, queryParams?: RequestObject) {
+        return this.wrapResponse<T>(
+            fetch(ApiRequestService.API_PREFIX + this.generateUrl(url, queryParams), {
+                ...options,
+                method: 'GET'
+            })
+        );
     }
 
     public post<T>(url: string, data: FormData) {
