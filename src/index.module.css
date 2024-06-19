@@ -1,6 +1,6 @@
 .page {
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 1rem;
+  grid-template-rows: 10rem auto;
+  row-gap: 1rem;
 }

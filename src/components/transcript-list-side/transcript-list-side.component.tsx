@@ -45,10 +45,16 @@ export const TranscriptListSideComponent: React.FC<ITranscriptListSideProps> = R
         api.search({query, limit, offset}).then(({data}) => {
             const {list, count} = data;
             state.current.count = count;
+            const regex = new RegExp(query, 'gi');
+
             const segments = list.map((item) => ({
                 fileName: item['file-name'],
                 date: new Date().toISOString().split('T')[0],
-                text: item.segments.map((item) => item.text).join('\n').trim()
+                text: item.segments.map((item) => {
+                    let text = item.text
+                    text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+                    return text.replace(regex, '<mark class="highlight">$&</mark>');
+                }).join('\n').trim()
             }));
 
             setTranscripts(segments);
@@ -141,7 +147,7 @@ export const TranscriptListSideComponent: React.FC<ITranscriptListSideProps> = R
                     <div key={`${index}${item.fileName}-${item.date}`} className={styles['file-info']}>
                         <h2 className={styles.title}>{item.fileName}</h2>
                         <div className={styles.date}>{item.date}</div>
-                        <p className={styles.text}>{item.text}</p>
+                        <p className={styles.text} dangerouslySetInnerHTML={{__html: item.text}} />
                     </div>
                 ))}
             </article>
